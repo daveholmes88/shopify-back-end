@@ -1,4 +1,4 @@
 class Nomination < ApplicationRecord
-    belongs_to :movies
-    belongs_to :users
+    belongs_to :movie
+    belongs_to :user
 end

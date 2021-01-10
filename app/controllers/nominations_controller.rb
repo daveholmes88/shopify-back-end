@@ -24,17 +24,19 @@ class NominationsController < ApplicationController
   # POST /nominations
   # POST /nominations.json
   def create
-    @nomination = Nomination.new(nomination_params)
-
-    respond_to do |format|
-      if @nomination.save
-        format.html { redirect_to @nomination, notice: 'Nomination was successfully created.' }
-        format.json { render :show, status: :created, location: @nomination }
-      else
-        format.html { render :new }
-        format.json { render json: @nomination.errors, status: :unprocessable_entity }
-      end
-    end
+   movies = Movie.all
+   movie = movies.find_by(title: params['title'])
+   if movie
+    nomination = Nomination.create(user_id: params['user_id'], movie_id: movie.id)
+   else 
+    new_movie = Movie.create(title: params['title'], year: params['year'])
+    nomination = Nomination.create(user_id: params['user_id'], movie_id: new_movie.id)
+   end 
+   if nomination.valid?
+    render json: { nominations: Nomination.all, movies: Movie.all }
+   else
+    render json: { error: 'Nomination not created'}, status: 401
+   end 
   end
 
   # PATCH/PUT /nominations/1
