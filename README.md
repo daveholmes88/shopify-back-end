@@ -1,24 +1,24 @@
 # README
+Dave Holmes' Shopify resume app "The Shoppies"
+This repo houses the backend code for Dave Holmes' Shopify resume app "The Shoppies". Please refer here for the project's frontend code and installation instructions. https://github.com/daveholmes88/shopify-front-end
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+The Shoppies:
 
-Things you may want to cover:
+An application that fetches movie titles through the OMDb API and allows users to nominate those movies for "The Shoppies" 
 
-* Ruby version
+Each user must login with a valid username and password. Each user is only allowed to nominate up to five movies. A full list of the nominated movies can be found showing all users the movies that are currently winning. 
 
-* System dependencies
+You can see the website at 
 
-* Configuration
+Backend Prerequisites
+Rails 6
+PostgreSQL
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Backend Installation Overview:
+After cloning this repo, first run the Rails server:
+cd shopify-back-end
+bundle install
+Database installation:
+rails db:create
+rails db:migrate
+Run Rails server: rails s
