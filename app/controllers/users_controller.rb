@@ -10,13 +10,10 @@ class UsersController < ApplicationController
         user_id = decoded_token[0]['user_id']
         user = User.find(user_id)
         if user 
-            render json: { user: {id: user.id, username: user.username }, nominations: nominations, movies: movies }
+            render json: { user: {id: user.id, username: user.username }, nominations: nominations, movies: movies, my_movies: user.movies }
         else 
             render json: { error: 'Invalid Credentials' }, status: 401
         end 
-  end
-
-  def edit
   end
 
   def create
@@ -36,7 +33,7 @@ class UsersController < ApplicationController
         payload = { user_id: user.id }
         token = JWT.encode(payload, 'secret', 'HS256')
         if user && user.authenticate(params[:password])
-            render json: { id: user.id, username: user.username, token: token }
+            render json: { id: user.id, username: user.username, token: token, my_movies: user.movies }
         else 
             render json: { error: 'Invalid Credentials' }, status: 401
         end
@@ -45,14 +42,4 @@ class UsersController < ApplicationController
     end
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
-    end
-
-    # Only allow a list of trusted parameters through.
-    def user_params
-      params.require(:user).permit(:username, :password_digest)
-    end
 end
